@@ -80,7 +80,7 @@ $ cd wwww/public
 ```bash
 # remove all files part from wp-config.php
 $ shopt -s extglob
-$ rm -rf !(wp-config.php)
+$ rm -rf !(wp-config.php|.htaccess)
 $ shopt -u extglob
 # git setup
 $ git init
