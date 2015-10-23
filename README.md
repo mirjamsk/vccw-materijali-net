@@ -143,7 +143,7 @@ If an encoding issues occur, try hard-code a fix :( as suggested in [issue #78](
 Modify the sql_adapter.rb file bay adding *sql_content.force_encoding("UTF-8")* on line 44 
 ```bash
 $ vagrant ssh
-$ cd usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/
+$ cd /usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/
 $ sudo vi sql_adapter.rb
 ```
 
