@@ -39,8 +39,8 @@ $ vagrant box add miya0001/vccw
 	127.0.0.1  algebra.materijali.dev
 	```
 
-#### 5. Download and extract .zip 
-https://github.com/mirjamsk/vccw-materijali-net/archive/0.1.zip
+#### 5. Download and extract .zip or .tar.gz
+https://github.com/mirjamsk/vccw-materijali-net/releases/latest
 
 This will be your development directory so extract the .zip into a meaningful location and rename the root directory from vccw-materijali-net-x.x to algebra-materijali
 
