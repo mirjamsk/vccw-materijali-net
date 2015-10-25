@@ -99,7 +99,6 @@ Modify Movefile located in algebra-materijali/ to use staging and production env
 #### 2. Vagrant ssh & cd to /vagrant file
 ```
 $ vagrant ssh
-$ sudo cp /vagrant/sql_adapter.rb  /usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/sql_adapter.rb
 $ cd /vagrant
 ```
 #### 3. Deal with the encoding issue ([see wiki][wordmove-encoding-fix-wiki])
