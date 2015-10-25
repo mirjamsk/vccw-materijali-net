@@ -39,8 +39,8 @@ $ vagrant box add miya0001/vccw
 	127.0.0.1  algebra.materijali.dev
 	```
 
-#### 5. Download and extract .zip or .tar.gz
-https://github.com/mirjamsk/vccw-materijali-net/releases/latest
+#### 5. Download and extract .zip 
+https://github.com/mirjamsk/vccw-materijali-net/archive/0.1.zip
 
 This will be your development directory so extract the .zip into a meaningful location and rename the root directory from vccw-materijali-net-x.x to algebra-materijali
 
@@ -98,54 +98,69 @@ Modify Movefile located in algebra-materijali/ to use staging and production env
 #### 2. Vagrant ssh & cd to /vagrant file
 ```
 $ vagrant ssh
+$ sudo cp /vagrant/sql_adapter.rb  /usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/sql_adapter.rb
 $ cd /vagrant
 ```
-#### 3. Sync db records 
+#### 3. Deal with the Encoding issue 
+```bash
+$ sudo cp /vagrant/sql_adapter.rb  /usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/sql_adapter.rb
+```
+
+#### 4. Sync db records 
 ```bash
 # to sync with production env use -e production
 $ wordmove pull -d -e staging	 # pull records from remote host to local machine
 $ wordmove push -d -e staging	 # push records from local machine to remote host
 ```
 
+
 #### Known errors or issues 
 
 ##### SyntaxError
 If you get a SyntaxError, check if your Movefile is valid (beware of indentation). Useful link: http://yamllint.com
 ```bash
-...
-/usr/local/rbenv/versions/2.1.2/lib/ruby/2.1.0/psych.rb:370:in `parse': (<unknown>): did not find expected key while parsing a block mapping at line 12 column 3 (Psych::SyntaxError)
-...
+/usr/local/rbenv/versions/2.1.2/lib/ruby/2.1.0/psych.rb:370:in `parse': (<unknown>):
+ did not find expected key while parsing a block mapping at line 12 column 3 (Psych::SyntaxError)
 ```
 ---
 ##### Use absolute paths not ~/
 ```bash
-...
- SCP did not finish successfully (1): scp: ~/apps/devalgebramaterijali/public/wp-content/dump.sql: No such file or directory (Net::SCP::Error)
-...
+SCP did not finish successfully (1): scp: 
+~/apps/devalgebramaterijali/public/wp-content/dump.sql: No such file or directory (Net::SCP::Error)
+
 ```
 ---
 ##### SyntaxError
 If you get a SyntaxError, check if your Movefile is valid (beware of indentation). Useful link: http://yamllint.com
 ```bash
-...
-/usr/local/rbenv/versions/2.1.2/lib/ruby/2.1.0/psych.rb:370:in `parse': (<unknown>): did not find expected key while parsing a block mapping at line 12 column 3 (Psych::SyntaxError)
-...
+/usr/local/rbenv/versions/2.1.2/lib/ruby/2.1.0/psych.rb:370:in `parse': (<unknown>):
+did not find expected key while parsing a block mapping at line 12 column 3 (Psych::SyntaxError)
 ```
 ---
 ##### Encoding error
 If an encoding issues occur, try hard-code a fix :( as suggested in [issue #78]( https://github.com/welaika/wordmove/issues/78).
 ```bash
-...
-/usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/sql_adapter.rb:44:in `gsub!': invalid byte sequence in US-ASCII (ArgumentError)
-...
+/usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/sql_adapter.rb:44:in `gsub!': 
+invalid byte sequence in US-ASCII (ArgumentError)
 ```
 
 Modify the sql_adapter.rb file bay adding *sql_content.force_encoding("UTF-8")* on line 44 
-```bash
-$ vagrant ssh
-$ cd /usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/
-$ sudo vi sql_adapter.rb
-```
++ Either in terminal using vi:
+	```bash
+	$ vagrant ssh
+	$ cd usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/
+	$ sudo vi sql_adapter.rb
+	```
+
++ Or with your editor of choice:
+	```bash
+	$ vagrant ssh
+	$ sudo cp /usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/sql_adapter.rb /vagrant/sql_adapter.rb 
+	# edit the file locally (it is now placed in the your root directory)
+	# save it 
+	$ sudo cp /vagrant/sql_adapter.rb /usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/sql_adapter.rb 
+	```
+	
 
 The sql_adapter.rb file should now look something like this:
 ```ruby
