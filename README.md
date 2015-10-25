@@ -6,6 +6,7 @@ Table of Contents
 + [Setting up local wordpress environment](#setting-up-local-wp-environment-for-the-first-time)  
 + [Sync local wp with github repo](#sync-local-wp-with-github-repo)  
 + [Sync local wp with remote database](#sync-local-wp-with-remote-database)  
++ [Workflow](#workflow)  
 
 
 Setting up local wp environment for the first time
@@ -101,77 +102,38 @@ $ vagrant ssh
 $ sudo cp /vagrant/sql_adapter.rb  /usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/sql_adapter.rb
 $ cd /vagrant
 ```
-#### 3. Deal with the Encoding issue 
+#### 3. Deal with the encoding issue ([see wiki][wordmove-encoding-fix-wiki])
 ```bash
 $ sudo cp /vagrant/sql_adapter.rb  /usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/sql_adapter.rb
 ```
 
 #### 4. Sync db records 
 ```bash
-# to sync with production env use -e production
+$ wordmove pull -d -e staging	
+```
+That's it!
+
+---
+
+Workflow
+----------------------------------
+#### Environments
+We are using 3 environments:
++ local
++ staging http://dev.algebra.materijali.net (for testing new features and development in general)
++ production http://algebra.materijali.net  (where our live site lives)
+
+#### Code versioning
+The code is pulled and pushed via git.
+To update server code you need to connect to the server via ssh (see evernote for details)
+
+#### Sync db records 
+```bash
+# to sync with production environment use -e production
 $ wordmove pull -d -e staging	 # pull records from remote host to local machine
 $ wordmove push -d -e staging	 # push records from local machine to remote host
 ```
 
 
-#### Known errors or issues 
-
-##### SyntaxError
-If you get a SyntaxError, check if your Movefile is valid (beware of indentation). Useful link: http://yamllint.com
-```bash
-/usr/local/rbenv/versions/2.1.2/lib/ruby/2.1.0/psych.rb:370:in `parse': (<unknown>):
- did not find expected key while parsing a block mapping at line 12 column 3 (Psych::SyntaxError)
-```
----
-##### Use absolute paths not ~/
-```bash
-SCP did not finish successfully (1): scp: 
-~/apps/devalgebramaterijali/public/wp-content/dump.sql: No such file or directory (Net::SCP::Error)
-
-```
----
-##### SyntaxError
-If you get a SyntaxError, check if your Movefile is valid (beware of indentation). Useful link: http://yamllint.com
-```bash
-/usr/local/rbenv/versions/2.1.2/lib/ruby/2.1.0/psych.rb:370:in `parse': (<unknown>):
-did not find expected key while parsing a block mapping at line 12 column 3 (Psych::SyntaxError)
-```
----
-##### Encoding error
-If an encoding issues occur, try hard-code a fix :( as suggested in [issue #78]( https://github.com/welaika/wordmove/issues/78).
-```bash
-/usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/sql_adapter.rb:44:in `gsub!': 
-invalid byte sequence in US-ASCII (ArgumentError)
-```
-
-Modify the sql_adapter.rb file bay adding *sql_content.force_encoding("UTF-8")* on line 44 
-+ Either in terminal using vi:
-	```bash
-	$ vagrant ssh
-	$ cd usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/
-	$ sudo vi sql_adapter.rb
-	```
-
-+ Or with your editor of choice:
-	```bash
-	$ vagrant ssh
-	$ sudo cp /usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/sql_adapter.rb /vagrant/sql_adapter.rb 
-	# edit the file locally (it is now placed in the your root directory)
-	# save it 
-	$ sudo cp /vagrant/sql_adapter.rb /usr/local/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/wordmove-1.2.0/lib/wordmove/sql_adapter.rb 
-	```
-	
-
-The sql_adapter.rb file should now look something like this:
-```ruby
-...
-    def serialized_replace!(source_field, dest_field)
-      length_delta = source_field.length - dest_field.length
-
-      sql_content.force_encoding("UTF-8")
-      sql_content.gsub!(/s:(\d+):([\\]*['"])(.*?)\2;/) do |match|
-        length = $1.to_i
-...
-```
-
 [edit-hosts]: http://www.rackspace.com/knowledge_center/article/modify-your-hosts-file
+[wordmove-encoding-fix-wiki]:https://github.com/mirjamsk/vccw-materijali-net/wiki/Known-errors,-issues-&-fixes#encoding-error
