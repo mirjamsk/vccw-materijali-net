@@ -43,7 +43,7 @@ $ vagrant box add miya0001/vccw
 #### 5. Download and extract .zip or .tag.gz
 https://github.com/mirjamsk/vccw-materijali-net/releases/tag/tech-blog-0.4
 
-This will be your development directory so extract the .zip into a meaningful location and rename the root directory from vccw-materijali-net-x.x to algebra-materijali
+This will be your development directory so extract the .zip into a meaningful location and rename the root directory from vccw-materijali-net-x.x to tech-blog
 
 #### 6. Change into the new directory
 ```
