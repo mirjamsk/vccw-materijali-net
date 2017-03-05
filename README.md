@@ -41,7 +41,7 @@ $ vagrant box add miya0001/vccw
 	```
 
 #### 5. Download and extract .zip or .tag.gz
-https://github.com/mirjamsk/vccw-materijali-net/releases/latest
+https://github.com/mirjamsk/vccw-materijali-net/releases/tag/tech-blog-0.4
 
 This will be your development directory so extract the .zip into a meaningful location and rename the root directory from vccw-materijali-net-x.x to algebra-materijali
 
@@ -86,7 +86,7 @@ $ shopt -u extglob
 # git setup
 $ git init
 $ rm .gitignore
-$ git remote add origin https://github.com/mirjamsk/techblog
+$ git remote add origin https://github.com/mirjamsk/techblog.git
 $ git pull origin master
 ```
 
