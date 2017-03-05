@@ -1,4 +1,4 @@
-Wordpress workflow for materijali.net
+Wordpress workflow for the tech blog
 =====================================
 
 Table of Contents
@@ -11,9 +11,9 @@ Table of Contents
 
 Setting up local wp environment for the first time
 --------------------------------------------------
-The original [instructions](http://vccw.cc/) have been modified a bit to better suit the particular needs of developing algebra.materijali.dev.
+The original [instructions](http://vccw.cc/) have been modified a bit to better suit the particular needs of developing our tech blog.
 
-You can skip any steps if you already have the required software installed on your machine. 
+You can *skip* any steps if you already have the required software installed on your machine. 
 
 
 #### 1. Install VirtualBox 4.3 or later
@@ -37,7 +37,7 @@ $ vagrant box add miya0001/vccw
 
  	```
 	127.0.0.1  192.168.33.10  
-	127.0.0.1  algebra.materijali.dev
+	127.0.0.1  tech-blog.dev
 	```
 
 #### 5. Download and extract .zip or .tag.gz
@@ -47,7 +47,7 @@ This will be your development directory so extract the .zip into a meaningful lo
 
 #### 6. Change into the new directory
 ```
-$ cd algebra-materijali
+$ cd tech-blog
 ```
 
 #### 7. Start a Vagrant environment
@@ -57,11 +57,11 @@ $ vagrant up
 <sup>Tip: you might be asked for your user account password</sup>
 
 #### 8. Check if everything is up and running
-Visit http://algebra.materijali.dev/ or http://192.168.33.10/
+Visit http://tech-blog.dev/ or http://192.168.33.10/
 
 #### 9. Check email with MailCatcher
 MailCathcer re-routes all WordPress emails to Mailcatcher.
-Just visit visit http://algebra.materijali.dev:1080/ or http://192.168.33.10:1080/
+Just visit visit http:/tech-blog.dev:1080/ or http://192.168.33.10:1080/
 
 #### 10. When you're done developing
 When you're done developing locally, always stop vagrant using the command 
@@ -86,7 +86,7 @@ $ shopt -u extglob
 # git setup
 $ git init
 $ rm .gitignore
-$ git remote add origin https://github.com/mirjamsk/algebra-materijali.git
+$ git remote add origin https://github.com/mirjamsk/techblog
 $ git pull origin master
 ```
 
@@ -94,7 +94,7 @@ Sync local wp with remote database
 ----------------------------------
 Local and remote databases can be synced using [wordmove](https://github.com/welaika/wordmove)
 #### 1. Modify Movefile
-Modify Movefile located in algebra-materijali/ to use staging and production environments
+Modify Movefile located in tech-blog/ to use staging and production environments
 
 #### 2. Vagrant ssh & cd to /vagrant file
 ```
@@ -119,8 +119,8 @@ Workflow
 #### Environments
 We are using 3 environments:
 + local
-+ staging http://dev.algebra.materijali.net (for testing new features and development in general)
-+ production http://algebra.materijali.net  (where our live site lives)
++ staging http://staging.tech-blog.ml (for testing new features and development in general)
++ production http://tech-blog.ml (where our live site lives)
 
 #### Code versioning
 The code is pulled and pushed via git.
